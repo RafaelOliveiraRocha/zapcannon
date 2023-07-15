@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Resultado do envio</title>
+</head>
+
+<body>
+  <h1>Status</h1>
+  <p>-> Total de tentativas: {{ resultado.total_tentativas }}</p>
+  <p>-> Envios bem-sucedidos: {{ resultado.envios_bem_sucedidos }}</p>
+  <p>-> Erros: {{ resultado.erros }}</p>
+  {% if resultado.filename %}
+  <p>Arquivo atualizado disponível para download:</p>
+  <a href="/download/{{ resultado.filename }}">
+    <button>Baixar Arquivo</button>
+  </a>
+  {% endif %}
+</body>
+
+</html>
