@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>ZapCannon</title>
+  <meta charset="utf-8">
+  <meta name="view port" content="width=device-width,
+    initial-scale=1, shrink-to-fit=no">
+  <link href="https://fonts.googleapis.com/css2?família =Montserrat:ital, wght @ 0,500; 1,500&display = swap " rel=" stylesheet ">
+  <link href="https://fonts.googleapis.com/css2?family=Comic+Neue&family=Montserrat:ital,wght@0,500;1,500&display=swap" rel="stylesheet">
+  <link rel="shortcut icon" href="favicon.ico">
+  <link rel="icon" type="image/png" href="{{ url_for('static', filename='img/logo-ico.png') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+
+<body>
+
+  <header class="menu-bg">
+    <div class="menu">
+      <div class="menu-logo">
+        <a href="/">
+          <img src="{{ url_for('static', filename='img/logo-zapCannon.svg') }}" alt="ZapCannon">
+        </a>
+      </div>
+      <nav class="menu-item">
+        <ul>
+          <li><a href="/">Sobre</a></li>
+          <li><a href="/templates/instrucoes.html">Intruções</a></li>
+          <li><a href="/templates/comece_agora.html">Comece Agora</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <section class="form-bg">
+    <form id="formulario" enctype="multipart/form-data" class="form">
+      <label type="search" for="csv_file">
+        <span class="txt">Selecionar arquivo .csv</span>
+        <span>Procurar</span>
+      </label>
+      <input type="file" name="csv_file" id="csv_file"><br><br>
+      <label type="read" for="mensagem">Digite sua mensagem:</label>
+      <textarea name="mensagem" id="mensagem"></textarea><br><br>
+      <button id="disparar" type="submit">Disparar mensagens</button>
+    </form>
+    <img src="{{ url_for('static', filename='img/comece.png') }}" alt="Comece Agora">
+    <div class="status" id="status"></div>
+  </section>
+
+  <footer class="footer-bg">
+    <div class="footer-1">
+      <img src="{{ url_for('static', filename='img/logo-footer.png') }}" alt="ZapCannon">
+      <p>ZapCannon - Todos os direitos reservados - 2023</p>
+    </div>
+    <div class="footer-redes">
+      <p>Contato do desenvolvedor</p>
+      <ul class="redes">
+        <li><a href="mailto:rafaelolirocha@gmail.com" target="_blank" rel="noopener noreferrer"> <img src="{{ url_for('static', filename='img/vt-gm.svg') }}" alt="Email Dev"></a></li>
+        <li><a href="https://www.linkedin.com/in/rafael-oliveira-rocha-89271021b/" target="_blank" rel="noopener noreferrer"><img src="{{ url_for('static', filename='img/vt-linkedin.svg') }}" alt="LinkedIn"></a></li>
+        <li><a href="https://github.com/RafaelOliveiraRocha" target="_blank" rel="noopener noreferrer"><img src="{{ url_for('static', filename='img/vt-github.svg') }}" alt="GitHub"></a></li>
+      </ul>
+    </div>
+  </footer>
+  <script src="../static/js/script.js"></script>
+</body>
+
+<script>
+  $(document).ready(function () {
+    $('#formulario').submit(function (event) {
+      event.preventDefault();
+      var form_data = new FormData(this);
+      $.ajax({
+        url: '/enviar_mensagens',
+        type: 'POST',
+        data: form_data,
+        processData: false,
+        contentType: false,
+        success: function (response) {
+          $('#status').html(response); // Usar .html() em vez de .text()
+        },
+        error: function (xhr, status, error) {
+          alert("Erro ao enviar mensagens: Recarregue a página e tente novamente!!");
+        }
+      });
+    });
+  });
+
+</script>
+
+
+</html>

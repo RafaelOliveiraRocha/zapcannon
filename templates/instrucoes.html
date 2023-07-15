@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+
+
+<head>
+  <title>ZapCannon</title>
+  <meta charset="utf-8">
+  <meta name="view port" content="width=device-width,
+  initial-scale=1, shrink-to-fit=no">
+  <link href="https://fonts.googleapis.com/css2?família =Montserrat:ital, wght @ 0,500; 1,500&display = swap " rel=" stylesheet ">
+  <link href="https://fonts.googleapis.com/css2?family=Comic+Neue&family=Montserrat:ital,wght@0,500;1,500&display=swap" rel="stylesheet">
+  <link rel="shortcut icon" href="favicon.ico">
+  <link rel="icon" type="image/png" href="{{ url_for('static', filename='img/logo-ico.png') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+
+<body>
+
+  <header class="menu-bg">
+    <div class="menu">
+      <div class="menu-logo">
+        <a href="/">
+          <img src="{{ url_for('static', filename='img/logo-zapCannon.svg') }}" alt="ZapCannon">
+        </a>
+      </div>
+      <nav class="menu-item">
+        <ul>
+          <li><a href="/">Sobre</a></li>
+          <li><a href="/templates/instrucoes.html">Intruções</a></li>
+          <li><a href="/templates/comece_agora.html">Comece Agora</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <section class="instrucoes-bg">
+    <div class="instrucao-img">
+      <img src="{{ url_for('static', filename='img/intrucao-img.svg') }}" alt="Instruções">
+    </div>
+    <div class="instrucoes">
+      <p class="anima-scroll">1- Certifique-se de ter um arquivo no formato .CSV preparado com as informações dos contatos que você deseja enviar mensagens via WhatsApp.</p>
+      <p class="anima-scroll">2- O arquivo CSV deve conter duas colunas. A primeira coluna deve ser intitulada 'NOME' e conter os respectivos nomes dos contatos. Caso não possua o nome dos contatos, basta deixar essa coluna em branco. A segunda coluna deve ser intitulada 'NÚMERO' e conter os números de telefone dos contatos no formato aceito pelo link do WhatsApp, que seria "55DD999999999".</p>
+      <p class="anima-scroll">3- Realize o upload do arquivo CSV no ZapCannon. Você deve localizar o arquivo em seu dispositivo e selecioná-lo para fazer o upload.</p>
+      <p class="anima-scroll">4- Após o upload do arquivo, digite a mensagem que será enviada, no campo 'digite sua mensagem'</p>
+      <p class="anima-scroll">5- Aí, é só clicar no botão "Disparar mensagens" para iniciar o processo de envio das mensagens. O ZapCannon abrirá o site do WhatsApp Web em sua tela. Conecte seu WhatsApp ao escanear o QR Code exibido na tela do seu dispositivo.</p>
+      <p class="anima-scroll">7- Após conectar seu WhatsApp, aguarde o processo de envio das mensagens. Ao final dos envios, você verá na tela do ZapCannon o status, informando quantas tentativas foram realizadas, bem como o total de envios realizados com sucesso e o total com erros. Além disso ficará disponível para download o arquivo CSV atualizado com a coluna 'status', informando se houve sucesso ou falha para aquele número específico.</p>
+      <p class="anima-scroll">8- O erro mais comum que pode ocorrer é quando o número da lista de contatos não possui o WhatsApp ativado, nesses casos basta aguardar que o programa irá passar para a próxima iteração. No entanto, também é importante lembrar que erros durante a execução podem ocorrer se você não mantiver a tela do WhatsApp ativa em sua máquina. Dessa forma basta apertar F5 para atualizar a página e tentar novamente.</p>
+    </div>
+    <div class="instrucoes-alert anima-scroll">
+      <p>Lembre-se de que é fundamental seguir as diretrizes e políticas de uso do WhatsApp ao utilizar o ZapCannon para enviar mensagens em massa. Certifique-se de ter o consentimento dos destinatários e evite o uso indevido da ferramenta.</p>
+    </div>
+    <div class="alert img-instrucao">
+      <img src="{{ url_for('static', filename='img/inst-mega.png') }}" alt="Instruções">
+    </div>
+    <div class="btn-comece">
+      <a href="/templates/comece_agora.html">Comece Agora</a>
+    </div>
+  </section>
+
+
+  <footer class="footer-bg">
+    <div class="footer-1">
+      <img src="{{ url_for('static', filename='img/logo-footer.png') }}" alt="ZapCannon">
+      <p>ZapCannon - Todos os direitos reservados - 2023</p>
+    </div>
+    <div class="footer-redes">
+      <p>Contato do desenvolvedor</p>
+      <ul class="redes">
+        <li><a href="mailto:rafaelolirocha@gmail.com" target="_blank" rel="noopener noreferrer"> <img src="{{ url_for('static', filename='img/vt-gm.svg') }}" alt="Email Dev"></a></li>
+        <li><a href="https://www.linkedin.com/in/rafael-oliveira-rocha-89271021b/" target="_blank" rel="noopener noreferrer"><img src="{{ url_for('static', filename='img/vt-linkedin.svg') }}" alt="LinkedIn"></a></li>
+        <li><a href="https://github.com/RafaelOliveiraRocha" target="_blank" rel="noopener noreferrer"><img src="{{ url_for('static', filename='img/vt-github.svg') }}" alt="GitHub"></a></li>
+      </ul>
+    </div>
+  </footer>
+  <script src="../static/js/script.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+
+
+<head>
+  <title>ZapCannon</title>
+  <meta charset="utf-8">
+  <meta name="view port" content="width=device-width,
+  initial-scale=1, shrink-to-fit=no">
+  <link href="https://fonts.googleapis.com/css2?família =Montserrat:ital, wght @ 0,500; 1,500&display = swap " rel=" stylesheet ">
+  <link href="https://fonts.googleapis.com/css2?family=Comic+Neue&family=Montserrat:ital,wght@0,500;1,500&display=swap" rel="stylesheet">
+  <link rel="shortcut icon" href="favicon.ico">
+  <link rel="icon" type="image/png" href="{{ url_for('static', filename='img/logo-ico.png') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+
+<body>
+
+  <header class="menu-bg">
+    <div class="menu">
+      <div class="menu-logo">
+        <a href="/">
+          <img src="{{ url_for('static', filename='img/logo-zapCannon.svg') }}" alt="ZapCannon">
+        </a>
+      </div>
+      <nav class="menu-item js-menu">
+        <ul>
+          <li><a href="#sobre">Sobre</a></li>
+          <li><a href="/templates/instrucoes.html">Intruções</a></li>
+          <li><a href="/templates/comece_agora.html">Comece Agora</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <section class="introducao-bg">
+    <div class="introducao-img">
+      <img src="{{ url_for('static', filename='img/img-comece.png') }}" alt="Pessoa feliz usando ZapCannon">
+    </div>
+    <div class="introducao-info">
+      <h1 class="primeira-info">Aproveite todo o potencial da ferramenta de comunicação preferida pelas pessoas e alcance um público maior nas suas interações. Ao aproveitar ao máximo essa ferramenta, você pode expandir sua presença, fortalecer relacionamentos e impulsionar seu negócio. Desfrute dos benefícios de automatizar esse processo e aproveite melhor o seu tempo.</h1>
+
+    </div>
+  </section>
+  <section class="sobre-bg" id="sobre">
+    <h1>Sobre</h1>
+    <div class="sobre-container">
+      <div class="sobre-item js-scroll">
+        <p>O ZapCannon é o resultado da minha jornada de estudos em desenvolvimento e engenharia de software, onde busquei colocar em prática os conhecimentos adquiridos. Tudo começou com o desenvolvimento de um bot que disparava mensagens utilizando o WhatsApp Web, como forma de exercício e desafio.</p>
+        <span>21:20</span>
+        <img src="{{ url_for('static', filename='img/vt-leit-wpp.svg') }}" alt="Confirmação de leitura">
+      </div>
+      <div class="sobre-item js-scroll">
+        <p>Ao abraçar esse desafio, desenvolvi um bot que automatizou o envio de mensagens. Busquei adaptar esse bot às necessidades específicas do meu trabalho, permitindo que eu escolhesse a mensagem a ser enviada com base em uma estrutura de decisão. Essa estrutura não está presente no ZapCannon atualmente. No entanto, está nos planos para futuras melhorias.</p>
+        <span>21:20</span>
+        <img src="{{ url_for('static', filename='img/vt-leit-wpp.svg') }}" alt="Confirmação de leitura">
+      </div>
+      <div class="sobre-item js-scroll">
+        <p>Motivado pelo sucesso dessa primeira empreitada, decidi ir além. A ideia era criar um ambiente online onde o serviço pudesse ser disponibilizado sem a necessidade de instalação em máquinas dos usuários.</p>
+        <span>21:21</span>
+        <img src="{{ url_for('static', filename='img/vt-leit-wpp.svg') }}" alt="Confirmação de leitura">
+      </div>
+      <div class="sobre-item js-scroll">
+        <p>Essa versão do ZapCannon permite enviar a mesma mensagem para todos os contatos presentes no arquivo. Foi um processo desafiador criar tudo do zero. Comecei pela parte de design no Figma, planejando cuidadosamente a aparência do site. Em seguida, parti para a codificação, utilizando HTML para estruturar o conteúdo, CSS para estilização e, nos bastidores, JavaScript e Python.</p>
+        <span>21:21</span>
+        <img src="{{ url_for('static', filename='img/vt-leit-wpp.svg') }}" alt="Confirmação de leitura">
+      </div>
+      <div class="sobre-item js-scroll">
+        <p>Estou entusiasmado com o ZapCannon e com a possibilidade de compartilhar essa ferramenta com você. Espero que você encontre o ZapCannon útil para suas necessidades de envio de mensagens via WhatsApp. Fique à vontade para explorar todas as funcionalidades disponíveis e, caso tenha algum feedback ou sugestão, não hesite em entrar em contato. Aproveite o uso do ZapCannon e potencialize suas interações no WhatsApp!</p>
+        <span>21:22</span>
+        <img src="{{ url_for('static', filename='img/vt-leit-wpp.svg') }}" alt="Confirmação de leitura">
+      </div>
+    </div>
+  </section>
+  <footer class="footer-bg">
+    <div class="footer-1">
+      <img src="{{ url_for('static', filename='img/logo-footer.png') }}" alt="ZapCannon">
+      <p>ZapCannon - Todos os direitos reservados - 2023</p>
+    </div>
+    <div class="footer-redes">
+      <p>Contato do desenvolvedor</p>
+      <ul class="redes">
+        <li><a href="mailto:rafaelolirocha@gmail.com" target="_blank" rel="noopener noreferrer"> <img src="{{ url_for('static', filename='img/vt-gm.svg') }}" alt="Email Dev"></a></li>
+        <li><a href="https://www.linkedin.com/in/rafael-oliveira-rocha-89271021b/" target="_blank" rel="noopener noreferrer"><img src="{{ url_for('static', filename='img/vt-linkedin.svg') }}" alt="LinkedIn"></a></li>
+        <li><a href="https://github.com/RafaelOliveiraRocha" target="_blank" rel="noopener noreferrer"><img src="{{ url_for('static', filename='img/vt-github.svg') }}" alt="GitHub"></a></li>
+      </ul>
+    </div>
+  </footer>
+  <script src="../static/js/script.js"></script>
+</body>
+
+</html>
