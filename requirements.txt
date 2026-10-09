@@ -1,0 +1,4 @@
+# Dependências do modo real; a simulação usa somente a biblioteca padrão.
+Flask
+pandas
+selenium>=4

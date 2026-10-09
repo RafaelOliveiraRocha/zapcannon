@@ -1,0 +1,7 @@
+SIMULAÇÃO LOCAL — dados fornecidos não serão enviados.
+Entrada validada: 3 registros.
+[1] PLANEJADO, NÃO ENVIADO: {"Número": "000000000001", "texto": "Pessoa Fictícia A\nOlá! Esta é uma demonstração fictícia."}
+[2] PLANEJADO, NÃO ENVIADO: {"Número": "000000000002", "texto": "Pessoa Fictícia B\nOlá! Esta é uma demonstração fictícia."}
+[3] PLANEJADO, NÃO ENVIADO: {"Número": "000000000003", "texto": "Olá! Esta é uma demonstração fictícia."}
+Resumo: 3 ações planejadas; 0 envios executados.
+Nenhum navegador, conexão ou arquivo de resultado foi criado.

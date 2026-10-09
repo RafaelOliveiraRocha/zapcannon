@@ -1,3 +1,10 @@
+import sys
+
+# Argumentos de linha de comando são tratados antes das dependências da automação.
+if __name__ == '__main__' and sys.argv[1:]:
+    from simulacao import main
+    raise SystemExit(main())
+
 from flask import Flask, render_template, request, send_file, send_from_directory
 import pandas as pd
 from selenium import webdriver
@@ -15,14 +22,18 @@ import csv
 app = Flask(__name__, template_folder=os.path.join(
     os.path.dirname(os.path.abspath(__file__)), 'templates'))
 
+OUTPUT_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'outputs')
 
-# Configura o caminho completo para o executável do geckodriver
-executable_path = "/caminho/para/geckodriver"
+
+# Caminho configurado no ambiente do processo; não há leitura automática de .env.
+executable_path = os.environ.get('GECKODRIVER_PATH')
 
 
 class WhatsAppBot:
     def __init__(self):
         # Configura o driver do Selenium
+        if not executable_path:
+            raise RuntimeError('Defina GECKODRIVER_PATH para o executável do geckodriver.')
         service = Service(executable_path=executable_path)
         self.driver = webdriver.Firefox(service=service)
 
@@ -75,9 +86,10 @@ class WhatsAppBot:
                 df_copy.loc[i, "Status"] = 'Falha'
                 pass
 
-        # Salva a planilha atualizada com a coluna "Status" no arquivo original
+        # Salva a planilha atualizada com "Status" no diretório local de resultados
         csv_filename = os.path.basename(csv_file.filename)
-        updated_csv_file = os.path.join('uploads', csv_filename)
+        os.makedirs(OUTPUT_DIR, exist_ok=True)
+        updated_csv_file = os.path.join(OUTPUT_DIR, csv_filename)
         df_copy.to_csv(updated_csv_file, index=False)
 
         # Fecha a janela do WhatsApp Web
@@ -93,7 +105,7 @@ class WhatsAppBot:
 
 @app.route('/static/<path:path>')
 def serve_static(path):
-    return send_from_directory('zapcannon', path)
+    return send_from_directory(app.static_folder, path)
 
 
 @app.route('/')
@@ -137,8 +149,8 @@ def result():
 
 @app.route('/download/<filename>', methods=['GET'])
 def download_file(filename):
-    # Obter o caminho completo para o diretório "uploads"
-    upload_dir = os.path.join(os.path.dirname(__file__), 'uploads')
+    # Obter o caminho completo para o diretório de resultados locais
+    upload_dir = OUTPUT_DIR
     # Obter o caminho completo para o arquivo
     file_path = os.path.join(upload_dir, filename)
 
