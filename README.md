@@ -1,21 +1,12 @@
 # ZapCannon
 
-Projeto histórico de estudo, registrado em julho de 2023, que combina uma interface de upload de CSV com automação do WhatsApp Web em Python. A demonstração local permite conferir os textos planejados com dados fictícios, sem enviar mensagens ou acessar serviços.
+Preparar a mesma mensagem para uma lista de contatos exige repetir a seleção dos destinatários e a personalização do texto. O ZapCannon nasceu de uma necessidade operacional para automatizar essa preparação, mantendo os nomes e as mensagens organizados a partir de um CSV.
 
-## Organização e funcionamento
+O projeto evoluiu de um script Python para uma interface web local com Flask, combinando uma aplicação prática com a trajetória de aprendizado em desenvolvimento e engenharia de software. A demonstração no terminal reproduz a preparação com dados inteiramente fictícios.
 
-- `zapcannon.py`: interface Flask e fluxo de automação com pandas e Selenium/Firefox. A escolha da simulação ocorre antes dos imports dessas dependências.
-- `simulacao.py`: validação e plano de mensagens no terminal, usando somente a biblioteca padrão do Python.
-- `templates/` e `static/`: páginas Jinja/HTML, CSS, imagens e JavaScript; a interface usa jQuery.
-- [examples/contatos-sinteticos.csv](examples/contatos-sinteticos.csv): entrada inteiramente fictícia.
-- [examples/saida-simulacao.txt](examples/saida-simulacao.txt): saída de referência da demonstração.
-- `outputs/`: resultados locais do fluxo real, criados quando necessário e ignorados pelo Git. Logs e configurações locais também não integram a entrega.
+## Experimente a demonstração
 
-O texto histórico da página inicial descreve a origem em estudos e a passagem de um bot para uma aplicação web. As páginas mantêm seus créditos e a identidade visual de 2023. O repositório não inclui arquivo de licença.
-
-## Demonstração sem envio
-
-Requisito: Python 3. Não precisa instalar dependências, configurar driver ou possuir credenciais. Na raiz do projeto:
+Na raiz do projeto, com **Python 3**, sem instalar dependências:
 
 ```bash
 python3 -S -B zapcannon.py --simular \
@@ -23,55 +14,95 @@ python3 -S -B zapcannon.py --simular \
   --mensagem "Olá! Esta é uma demonstração fictícia."
 ```
 
-`--simular` é obrigatório para a demonstração. `-S` evita o carregamento de pacotes pela inicialização de `site`; `-B` evita caches de bytecode. Qualquer argumento de linha de comando é tratado pela interface da simulação antes dos imports de Flask, pandas e Selenium. Argumentos incorretos são rejeitados; não iniciam a interface web.
+O fluxo é **leitura e validação do CSV → personalização pelo nome → textos preparados no terminal**. Quando `Nome` está preenchido, o texto recebe o nome, uma quebra de linha e a mensagem. Quando está vazio, recebe somente a mensagem.
 
-Para consultar as opções sem carregar a automação:
+A simulação usa a biblioteca padrão, antes dos imports de Flask, pandas e Selenium. Ela mantém os destinos como texto e mostra ações planejadas, sem links de envio, rede, navegador ou controles de teclado/mouse. Para consultar as opções: `python3 -S -B zapcannon.py --help`.
+
+Prévia fiel de [examples/saida-simulacao.txt](examples/saida-simulacao.txt). Os três destinos são fictícios; `\n` representa uma quebra de linha:
+
+| Destino fictício | Texto planejado |
+|---|---|
+| `000000000001` | `Pessoa Fictícia A\nOlá! Esta é uma demonstração fictícia.` |
+| `000000000002` | `Pessoa Fictícia B\nOlá! Esta é uma demonstração fictícia.` |
+| `000000000003` | `Olá! Esta é uma demonstração fictícia.` |
+
+O resumo da demonstração é **3 ações planejadas e 0 envios executados**. O terceiro registro mostra o caso sem nome. A simulação apresenta o plano no terminal; não exporta CSV.
+
+## Experimente outros textos e contatos fictícios
+
+Crie uma cópia da [entrada fictícia](examples/contatos-sinteticos.csv):
 
 ```bash
-python3 -S -B zapcannon.py --help
+mkdir -p outputs
+cp examples/contatos-sinteticos.csv outputs/contatos-experimento.csv
 ```
 
-O exemplo tem três registros: dois nomes preenchidos e um vazio. Os números com prefixo `000` são marcadores fictícios da demonstração, não uma lista para o modo real. Para cada linha, o plano mostra o número e o texto: `Nome`, uma quebra de linha e a mensagem; quando o nome está vazio, somente a mensagem. O resumo deve ser **3 ações planejadas e 0 envios executados**.
+Edite a cópia mantendo os cabeçalhos `Nome` e `Número`. Use apenas destinos fictícios para a demonstração, preserve-os como texto e deixe `Nome` vazio para experimentar a mensagem sem prefixo. Troque o texto em `--mensagem`:
 
-A simulação valida toda a entrada antes de mostrar ações. Não constrói links de envio, abre navegador, controla teclado/mouse, usa rede ou grava CSV de resultado. Não apresenta ações planejadas como mensagens entregues.
+```bash
+python3 -S -B zapcannon.py --simular \
+  --csv outputs/contatos-experimento.csv \
+  --mensagem "Este é outro texto inteiramente fictício."
+```
+
+### Salve o plano como texto
+
+O terminal pode capturar a saída em um arquivo `.txt` dentro de `outputs/`. Escolha um nome novo; o bloco abaixo usa `noclobber` para recusar a substituição de um arquivo existente:
+
+```bash
+mkdir -p outputs
+(
+  set -o noclobber
+  python3 -S -B zapcannon.py --simular \
+    --csv examples/contatos-sinteticos.csv \
+    --mensagem "Olá! Esta é uma demonstração fictícia." \
+    > outputs/plano-demonstracao-01.txt
+)
+```
+
+Isso é redirecionamento da saída pelo terminal, não uma exportação do programa. O arquivo contém os textos planejados e o resumo, no mesmo formato da referência; a simulação continua sem gerar CSV.
 
 ## Formato da entrada
 
-CSV com cabeçalho, vírgula como separador, UTF-8 (com ou sem BOM) e aspas CSV padrão:
+CSV com cabeçalho, vírgula como separador, UTF-8 com ou sem BOM e aspas CSV padrão:
 
-| Campo | Papel |
+| Campo | Uso |
 |---|---|
-| `Nome` | Nome para prefixar o texto; pode ficar vazio |
-| `Número` | Destino; na simulação, texto preenchido com dígitos ASCII, sem espaços ou pontuação |
+| `Nome` | Prefixo da mensagem; pode ficar vazio |
+| `Número` | Destino textual; na simulação, somente dígitos ASCII, sem espaços ou pontuação |
 
-Os nomes e acentos dos cabeçalhos são exatos: `Nome` e `Número`. A simulação rejeita cabeçalhos ausentes/repetidos, registros com quantidade de campos incompatível, números vazios/incompatíveis e mensagem vazia. Colunas adicionais são aceitas, mas não entram no plano. Apenas cabeçalho é uma entrada válida com zero ações.
+Os cabeçalhos são exatamente `Nome` e `Número`, incluindo os acentos. A simulação valida toda a entrada antes de apresentar o plano e rejeita cabeçalhos ausentes/repetidos, campos incompatíveis, destinos vazios ou fora do formato e mensagem vazia. Colunas adicionais são aceitas, mas não entram no plano. Uma entrada só com cabeçalho gera zero ações.
 
-Números são preservados como texto na simulação. A validação não confirma DDI, DDD, existência do número ou presença no WhatsApp. Não há conversão de formatos ou remoção de duplicidades: cada linha válida produz uma ação planejada.
+Cada linha válida produz uma ação planejada, inclusive destinos repetidos. O formato dos dígitos não determina DDI, DDD, existência do número ou presença no serviço.
 
-## Interface e execução real
+## Estrutura
 
-Este é um fluxo diferente da demonstração: abre Firefox na **máquina que executa o Python**, acessa o WhatsApp Web, exige conexão da conta por QR Code e tenta enviar mensagens. Não usa uma API oficial do WhatsApp.
+- `zapcannon.py`: entrada da CLI e aplicação local Flask, com pandas e Selenium/Firefox.
+- `simulacao.py`: validação do CSV e preparação dos textos com a biblioteca padrão.
+- `examples/`: contatos fictícios e saída de referência.
+- `templates/` e `static/`: páginas Jinja/HTML, CSS, imagens e JavaScript com jQuery. Os créditos de autoria estão nas páginas, como [home.html](templates/home.html).
+- `outputs/`: arquivos locais de demonstração e resultados da interface, ignorados pelo Git.
 
-Dependências identificadas no código: Flask, pandas e Selenium 4, além de Firefox e geckodriver compatíveis. `requirements.txt` declara as dependências do modo real, sem fixar um ambiente histórico. Para preparar um ambiente separado:
+## Interface local: Flask e Firefox
+
+A interface recebe o CSV e a mensagem, abre o Firefox na máquina que executa o Python e acessa o WhatsApp Web. A conta é conectada por QR Code; o processamento é acionado ao submeter o formulário.
+
+Requisitos: **Flask, pandas, Selenium 4, Firefox e geckodriver compatível**. As dependências Python estão em [requirements.txt](requirements.txt):
 
 ```bash
 python3 -m venv .venv
 source .venv/bin/activate
 python -m pip install -r requirements.txt
 export GECKODRIVER_PATH='/caminho/absoluto/para/geckodriver'
+python3 zapcannon.py
 ```
 
-O driver é lido de `GECKODRIVER_PATH` no ambiente do processo. Configuração ausente impede sua criação. **Não há carregamento automático de `.env`.**
+Sem argumentos, o programa inicia a aplicação Flask local em `http://127.0.0.1:5000/`. `GECKODRIVER_PATH` é lido do ambiente do processo e precisa apontar para o executável do driver antes de iniciar a aplicação. Não há carregamento automático de `.env`.
 
-`python3 zapcannon.py`, **sem argumentos**, inicia a interface Flask local. O formulário envia `csv_file` e `mensagem` por POST para `/enviar_mensagens`; o envio é iniciado somente ao submeter esse formulário. Use esse fluxo apenas com contatos e mensagens cuja utilização seja apropriada e consentida.
+O formulário envia `csv_file` e `mensagem` por POST para `/enviar_mensagens`. O fluxo lê o CSV com `pandas.read_csv`, que infere tipos e valores ausentes: destinos com zeros iniciais podem ser convertidos em números. O leitor da simulação, por sua vez, mantém strings.
 
-O fluxo real lê o CSV com pandas, acrescenta `Status` se necessário e percorre todas as linhas. Prefixa nomes presentes, codifica o texto no link do WhatsApp, espera o botão e tenta clicar. Apresenta tentativas, sucessos e erros; salva o CSV com `Status` em `outputs/<nome-do-upload>` e oferece download. Um arquivo com o mesmo nome é sobrescrito; nomes diferentes deixam resultados anteriores nesse diretório.
+A interface percorre todas as linhas, inclusive repetidas ou já marcadas como `Enviada`. Personaliza o texto pelo nome, abre a conversa e aciona o botão de envio. No resultado, `Enviada` e o contador de sucessos representam esse acionamento; `Falha` registra um erro de processamento. Entrega e leitura não são estados acompanhados pela aplicação.
 
-## Limitações
+O CSV atualizado com `Status`, sem índice adicional, fica em `outputs/<nome-do-upload>` e pode ser baixado pela interface. Uploads com o mesmo nome sobrescrevem esse resultado; nomes diferentes mantêm os arquivos anteriores.
 
-- A simulação confere estrutura e texto; não verifica acesso ao WhatsApp Web, seletores, navegador/driver ou entrega de mensagens. Uma ação planejada não comprova que o envio real funcionaria.
-- O parser da simulação mantém strings e trata nome vazio como ausente. O pandas do fluxo real infere tipos e ausentes; pode remover zeros iniciais ou interpretar números de outra forma.
-- O fluxo real depende da interface do WhatsApp Web e de esperas fixas. O clique é contado como sucesso, sem confirmação de entrega ou leitura. Não há deduplicação nem filtro de registros previamente marcados como `Enviada`.
-- A validação de upload do fluxo real é limitada. Erros são capturados de forma ampla e o driver é fechado somente no caminho normal; falhas anteriores podem deixar o navegador aberto.
-- A aplicação mantém duas rotas para `/` e uma rota estática redundante. Não há controle de concorrência para resultados com o mesmo nome ou separação por sessão, nem autenticação para downloads. Não é um serviço preparado para exposição pública.
-- As versões das dependências não estão fixadas. A reprodução do ambiente original não é garantida; a interface carrega jQuery e fontes externos quando aberta no navegador.
+Os seletores e as esperas dependem da interface do WhatsApp Web. O navegador é fechado ao concluir o fluxo normal; falhas anteriores podem deixá-lo aberto. A aplicação é local: os resultados não têm isolamento por sessão nem autenticação para download. As páginas carregam jQuery e fontes externos, e as dependências Python são declaradas sem versões fixas.
